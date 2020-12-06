@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>Apply Registration</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
+	<section class="container-fluid">
+		<section class="col-12 col-sm-6 col-md-3">
+			<form class="form" id="myForm" enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <!--<label for="fname">Account Number</label>
+            <input type="name" class="form-control" id="account">
+          </div>-->
+          <div class="form-group col-md-6">
+            <label for="fname">First Name</label>
+            <input type="name" class="form-control" id="fname">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPassword4">Password</label>
+            <input type="password" class="form-control" id="inputPassword4">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputEmail4">Email</label>
+            <input type="email" class="form-control" id="inputEmail4">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="bcode">Branch Code</label>
+            <input type="text" class="form-control" id="bcode">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputCity">City</label>
+            <input type="text" class="form-control" id="inputCity">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPhone">Phone Number</label>
+            <input type="number" class="form-control" id="PhoneNumber">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="idcard">ID Card</label>
+          <input type="number" class="form-control" id="idcard" placeholder="XXXXX-YYYYYYY-Z">
+        </div>
+        <div class="form-group">
+          <label for="inputAddress">Address</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputZip">Zip</label>
+          <input type="text" class="form-control" id="inputZip">
+        </div>
+        <button type="submit" class="btn btn-primary">Apply</button>
+      </form>
+      <script>
+        const myform = document.getElementById('myForm');
+        myform.addEventListener('submit', async function(e){
+          e.preventDefault();
+          const form = e.currentTarget;
+          var formData = new FormData(document.getElementById('myForm'));
+          var branch_id = document.getElementById("bcode").value;
+          var customer_id = 0;
+          var name = document.getElementById("fname").value;
+          var password = document.getElementById("inputPassword4").value;
+          var city = document.getElementById("inputCity").value;
+          var phone = document.getElementById("PhoneNumber").value;
+          var cnic = document.getElementById("idcard").value;
+          var Email = document.getElementById("inputEmail4").value;
+          var Address = document.getElementById("inputAddress").value;
+          var Zip = document.getElementById("inputZip").value;
+          var totalinput = {customer_id,name, branch_id, password, city, phone, cnic, Address, Zip, Email };
+
+          const searchparam = new URLSearchParams();
+
+          for (const pair of formData){
+            searchparam.append(pair[0], pair[1]);
+          }
+          //var w = JSON.stringify(formData);
+          //console.log(formData);
+          //console.log(branch_id);
+          //console.log(customer_id);
+          //console.log(name);
+          //console.log(password);
+          //console.log(city);
+          //console.log(phone);
+          //console.log(cnic);
+          //console.log(Email);
+          console.log(JSON.stringify(totalinput));
+
+          fetch('http://localhost:3000/customers',{
+            method: 'post',
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(totalinput)
+          }).then(function(response){
+            return response.text();
+          }).then(function(text){
+            console.log(text);
+          }).catch(function(error) {
+            console.error(error);
+          })
+          //fetch("http://localhost:3000/customers" + customer_id).then(function(response){console.log(response)}).catch(function(error){console.error(error);});
+        });
+      </script>
+			
+		</section>
+	</section>
+
+</body>
+</html>
